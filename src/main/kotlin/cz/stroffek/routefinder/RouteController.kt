@@ -70,7 +70,7 @@ class RouteController {
             response.writer.print(result.toString())
         } else {
             // The route does not exist
-            response.status = 401
+            response.status = 400
         }
     }
 }
