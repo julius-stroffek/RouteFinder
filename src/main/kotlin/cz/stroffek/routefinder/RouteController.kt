@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import java.net.URL
-import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class RouteController() {
-    var borders: MutableMap<String, List<String>>
+class RouteController {
+    private var borders: MutableMap<String, List<String>>
 
     init {
         val countries: JSONArray = JSONTokener(
@@ -34,7 +33,7 @@ class RouteController() {
 
     @GetMapping("/routing/{origin}/{destination}")
     fun shortestRoute(
-        request : HttpServletRequest, response : HttpServletResponse,
+        response : HttpServletResponse,
         @PathVariable("origin") origin : String,
         @PathVariable("destination") destination : String
     ) {
@@ -57,7 +56,7 @@ class RouteController() {
 
         // Now reconstruct the path from the destination to origin from visited map
         if (visitedCountries.containsKey(destination)) {
-            var route = mutableListOf<String>()
+            val route = mutableListOf<String>()
             var cc = destination
             route.add(0, cc)
             while (cc != origin) {
